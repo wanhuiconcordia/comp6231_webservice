@@ -1,0 +1,6 @@
+#ignore bin
+bin
+#ignore .settings
+.settings
+#ignore .git
+.git
