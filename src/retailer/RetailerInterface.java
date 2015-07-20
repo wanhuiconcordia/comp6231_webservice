@@ -7,7 +7,9 @@ import javax.jws.soap.SOAPBinding.Style;
 
 import tools.Customer;
 import tools.Item;
+import tools.ItemList;
 import tools.ItemShippingStatus;
+import tools.ItemShippingStatusList;
 import tools.SignUpResult;
 
 //Service Endpoint Interface
@@ -15,9 +17,9 @@ import tools.SignUpResult;
 @SOAPBinding(style = Style.RPC)
 
 public interface RetailerInterface {
-	@WebMethod Item[] getCatalog (int customerReferenceNumber);
-	@WebMethod ItemShippingStatus[] submitOrder (int customerReferenceNumber, Item[] itemList);
+	@WebMethod ItemList getCatalog (int customerReferenceNumber);
+	@WebMethod ItemShippingStatusList submitOrder (int customerReferenceNumber, ItemList orderItemList);
 	@WebMethod SignUpResult signUp (String name, String password, String street1, String street2, String city, String state, String zip, String country);
 	@WebMethod Customer signIn (int customerReferenceNumber, String password);
-	@WebMethod Item[] getProducts (String productID);
+	@WebMethod ItemList getProducts (String productID);
 }

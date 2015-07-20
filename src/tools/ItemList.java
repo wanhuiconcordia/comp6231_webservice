@@ -18,6 +18,12 @@ public class ItemList {
 	
 	/**
 	 * Constructor 
+	 */
+	public ItemList(int i){
+		innerItemList = new ArrayList<Item>(i);
+	}
+	/**
+	 * Constructor 
 	 * @param Item item
 	 */
 	public void addItem(Item item){
@@ -40,4 +46,6 @@ public class ItemList {
 	public void clearItems(){
 		innerItemList.clear();
 	}
+	
+	
 }

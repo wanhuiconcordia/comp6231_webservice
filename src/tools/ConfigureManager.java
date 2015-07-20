@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.util.HashMap;
+import java.util.Map.Entry;
 
 /**
  * @author comp6231.team5
@@ -143,7 +144,7 @@ public class ConfigureManager {
 	 * out put the contents in data to the screen
 	 */
 	public void display(){
-		for (HashMap.Entry<String, String> entry : data.entrySet()) {
+		for (Entry<String, String> entry : data.entrySet()) {
 		    String key = entry.getKey();
 		    Object value = entry.getValue();
 		    System.out.println(key + ":\t" + value);
