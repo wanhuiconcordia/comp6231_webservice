@@ -9,23 +9,22 @@ import org.dom4j.tree.DefaultElement;
  * @author comp6231.team5
  *
  */
-public class Item extends Product implements Serializable{
-	protected static final long serialVersionUID = -1927708729616470764L;
-	protected int quantity;
+public class Item extends Product {
+	public int quantity;
 	
 	/**
 	 * constructor
-	 * @param otherItem
+	 * @param Item otherItem
 	 */
 	public Item(Item otherItem){
-		super(otherItem.manufacturerName, otherItem.productType, otherItem.unitPrice);
+		super(otherItem.productID, otherItem.manufacturerName, otherItem.productType, otherItem.unitPrice);
 		this.quantity = otherItem.quantity;
 	}
 	/**
-	 * @param manufacturerName
-	 * @param productType
-	 * @param unitPrice
-	 * @param quantity
+	 * @param String manufacturerName
+	 * @param String productType
+	 * @param float unitPrice
+	 * @param int quantity
 	 */
 	public Item(String manufacturerName, String productType, float unitPrice, int quantity){
 		super(manufacturerName, productType, unitPrice);
@@ -33,9 +32,21 @@ public class Item extends Product implements Serializable{
 	}
 	
 	/**
+	 * @param String productID
+	 * @param String manufacturerName
+	 * @param String productType
+	 * @param float unitPrice
+	 * @param int quantity
+	 */
+	public Item(String productID, String manufacturerName, String productType, float unitPrice, int quantity){
+		super(productID, manufacturerName, productType, unitPrice);
+		this.quantity = quantity;
+	}
+	
+	/**
 	 * constructor
-	 * @param product
-	 * @param quantity
+	 * @param Product product
+	 * @param int quantity
 	 */
 	public Item(Product product, int quantity){
 		super(product);
@@ -47,20 +58,6 @@ public class Item extends Product implements Serializable{
 	 */
 	public String toString(){
 		return super.toString() + ",\t" + quantity; 
-	}
-	
-	/**
-	 * @return quantity of the item
-	 */
-	public int getQuantity(){
-		return quantity;
-	}
-	
-	/**
-	 * @param q
-	 */
-	public void setQuantity(int q){
-		quantity = q;
 	}
 	
 	/* (non-Javadoc)
@@ -79,13 +76,11 @@ public class Item extends Product implements Serializable{
 	
 	/**
 	 * determine whether the current item is the same as the other item
-	 * @param otherItem
+	 * @param Item otherItem
 	 * @return ture if the same, false if not
 	 */
 	public boolean isSameProductAs(Item otherItem){
-		return (this.manufacturerName.equals(otherItem.manufacturerName))
-				&& (this.productType.equals(otherItem.productType))
-				&& (this.unitPrice == otherItem.unitPrice);
+		return super.isSame(otherItem);
 	}
 	/**
 	 * save the current item to an  Element object

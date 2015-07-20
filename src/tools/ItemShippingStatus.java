@@ -1,18 +1,15 @@
 package tools;
-import java.io.Serializable;
-
 /**
  * @author comp6231.team5
  *
  */
-public class ItemShippingStatus extends Item implements Serializable{
-	private static final long serialVersionUID = -4959224898727923197L;
-	private boolean shippingStatus;
+public class ItemShippingStatus extends Item{
+	public boolean shippingStatus;
 	
 	/**
 	 * constructor
-	 * @param item
-	 * @param shippingStatus
+	 * @param Item item
+	 * @param bool shippingStatus
 	 */
 	public ItemShippingStatus(Item item, boolean shippingStatus) {
 		super(item);
@@ -21,15 +18,52 @@ public class ItemShippingStatus extends Item implements Serializable{
 	
 	/**
 	 * constructor
-	 * @param manufacturerName
-	 * @param productType
-	 * @param unitPrice
-	 * @param quantity
-	 * @param shippingStatus
+	 * @param String manufacturerName
+	 * @param String productType
+	 * @param float unitPrice
+	 * @param int quantity
+	 * @param bool shippingStatus
 	 */
-	public ItemShippingStatus(String manufacturerName, String productType, float unitPrice, int quantity, boolean shippingStatus){
+	public ItemShippingStatus(String manufacturerName, 
+			String productType,
+			float unitPrice,
+			int quantity, 
+			boolean shippingStatus){
 		super(manufacturerName, productType, unitPrice, quantity);
 		this.shippingStatus = shippingStatus;
+	}
+	
+	/**
+	 * Constructor
+	 * @param String productID 
+	 * @param String manufacturerName
+	 * @param String productType
+	 * @param float unitPrice
+	 * @param int quantity
+	 * @param bool shippingStatus
+	 */
+	public ItemShippingStatus(String productID,
+			String manufacturerName,
+			String productType,
+			float unitPrice,
+			int quantity,
+			boolean shippingStatus
+			){
+		super(productID, manufacturerName, productType, unitPrice, quantity);
+		this.shippingStatus = shippingStatus;
+	}
+
+	/**
+	 * Constructor
+	 * @param ItemShippingStatus itemShippingStatus
+	 */
+	public ItemShippingStatus(ItemShippingStatus itemShippingStatus){
+		super(itemShippingStatus.productID
+				, itemShippingStatus.manufacturerName
+				, itemShippingStatus.productType
+				, itemShippingStatus.unitPrice
+				, itemShippingStatus.quantity);
+		this.shippingStatus = itemShippingStatus.shippingStatus;
 	}
 	
 	/* (non-Javadoc)
