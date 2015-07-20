@@ -1,2 +1,2 @@
 #!/bin/bash
-java -jar manufacturer.jar -ORBInitialPort 1050 -ORBInitialHost localhost
+java -cp ".:./libs/dom4j-2.0.0-ALPHA-2.jar:./libs/swingx-1.6.jar:" manufacturer.Manufacturer
