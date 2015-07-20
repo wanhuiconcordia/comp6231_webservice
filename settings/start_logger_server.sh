@@ -1,2 +1,2 @@
 #!/bin/bash
-java -jar loggerserver.jar
+java loggerserver/LoggerServer
