@@ -17,6 +17,21 @@ public class Customer{
 	public String country;
 
 	/**
+	 * Default constructor
+	 */
+	public Customer(){
+		customerReferenceNumber = -1;
+		name = new String();
+		password = new String();
+		street1 = new String();
+		street2 = new String();
+		city = new String();
+		state = new String();
+		zip = new String();
+		country = new String();
+	}
+	
+	/**
 	 * Constructor
 	 * @param int customerReferenceNumber
 	 * @param String name

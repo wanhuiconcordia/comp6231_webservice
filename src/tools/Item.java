@@ -1,5 +1,4 @@
 package tools;
-import java.io.Serializable;
 
 import org.dom4j.Element;
 import org.dom4j.tree.DefaultElement;
@@ -12,6 +11,9 @@ import org.dom4j.tree.DefaultElement;
 public class Item extends Product {
 	public int quantity;
 	
+	public Item(){
+		super();
+	}
 	/**
 	 * constructor
 	 * @param Item otherItem

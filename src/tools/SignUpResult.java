@@ -1,5 +1,4 @@
 package tools;
-import java.io.Serializable;
 
 /**
  *  If result is true, the customerReferenceNumber and password are generated properly on server
@@ -7,12 +6,19 @@ import java.io.Serializable;
  * @author comp6231.team5
  *
  */
-public class SignUpResult implements Serializable{
-	private static final long serialVersionUID = 8371860298743889873L;
+public class SignUpResult{
 	public boolean result;
 	public int customerReferenceNumber;
 	public String message;	//Server will give a message about the sign up status
 	
+	/**
+	 * Default constructor 
+	 */
+	public SignUpResult(){
+		result = false;
+		customerReferenceNumber = 0;
+		message = new String();
+	}
 	/**
 	 * constructor
 	 * @param result

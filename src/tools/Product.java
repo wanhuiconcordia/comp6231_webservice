@@ -11,6 +11,16 @@ public class Product {
 	public String productType;
 	public float unitPrice;
 
+	
+	/**
+	 * Default constructor 
+	 */
+	public Product(){
+		productID = new String();
+		manufacturerName = new String();
+		productType = new String();
+		unitPrice = 0;
+	}
 	/**
 	 * constructor
 	 * @param String manufacturerName

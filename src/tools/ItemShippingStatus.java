@@ -7,6 +7,13 @@ public class ItemShippingStatus extends Item{
 	public boolean shippingStatus;
 	
 	/**
+	 * Default constructor
+	 */
+	public ItemShippingStatus() {
+		super();
+		this.shippingStatus = false;
+	}
+	/**
 	 * constructor
 	 * @param Item item
 	 * @param bool shippingStatus

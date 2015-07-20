@@ -40,4 +40,14 @@ public class ProductList {
 	public void clearProducts(){
 		innerProductList.clear();
 	}
+	
+	public String toString(){
+		String retStr = new String();
+		if(innerProductList != null){
+			for(Product product: innerProductList){
+				retStr += (product.toString() + "\n");
+			}
+		}
+		return retStr;
+	}
 }
