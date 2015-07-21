@@ -73,6 +73,27 @@ public class Product {
 	public boolean isSame(Product otherProduct){
 		return (productID.equals(otherProduct.productID));
 	}
+	
+	/**
+	 * @return manufacturer name
+	 */
+	public String getManufacturerName(){
+		return manufacturerName;
+	}
+	
+	/**
+	 * @return product type
+	 */
+	public String getProductType(){
+		return productType;
+	}
+	
+	/**
+	 * @return
+	 */
+	public float getUnitPrice(){
+		return unitPrice;
+	}
 
 	/* (non-Javadoc)
 	 * @see java.lang.Object#clone()

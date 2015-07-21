@@ -70,6 +70,20 @@ public class Item extends Product {
 	}
 	
 	/**
+	 * @return quantity of the item
+	 */
+	public int getQuantity(){
+		return quantity;
+	}
+	
+	/**
+	 * @param q
+	 */
+	public void setQuantity(int q){
+		quantity = q;
+	}
+	
+	/**
 	 * @return the clone product from the current item 
 	 */
 	public Product cloneProduct(){
