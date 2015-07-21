@@ -47,5 +47,13 @@ public class ItemList {
 		innerItemList.clear();
 	}
 	
-	
+	public String toString(){
+		String retStr = new String();
+		if(innerItemList != null){
+			for(Item item: innerItemList){
+				retStr += (item.toString() + "\n");
+			}
+		}
+		return retStr;
+	}
 }

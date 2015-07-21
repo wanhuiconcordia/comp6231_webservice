@@ -90,13 +90,13 @@ public class RetailerImpl implements RetailerInterface {
 
 	@Override
 	public ItemList getCatalog(int customerReferenceNumber) {
-		ItemList allItems = new ItemList();
+		ItemList itemList = new ItemList();
 		HashMap<String, Item> itemsMap = new HashMap<String, Item>();
 
 		for(int i = 0; i < warehouseList.size(); i++){
 			ItemList itemListFromWarehouse = warehouseList.get(i).getProductsByID("");
 			for(Item item: itemListFromWarehouse.innerItemList){
-				String key = item.manufacturerName + item.productType;
+				String key = item.productID;
 				Item itemInMap = itemsMap.get(key); 
 				if(itemInMap == null){
 					itemsMap.put(key, item.clone());
@@ -107,10 +107,10 @@ public class RetailerImpl implements RetailerInterface {
 		}
 
 		for(Item item: itemsMap.values()){
-			allItems.innerItemList.add(item);
+			itemList.innerItemList.add(item);
 		}
-		System.out.println(allItems.innerItemList);
-		return allItems;
+		System.out.println(itemList.toString());
+		return itemList;
 	}
 
 	@Override
@@ -186,17 +186,18 @@ public class RetailerImpl implements RetailerInterface {
 					break;
 				}
 			}
-			itemShippingStatusList = new ItemShippingStatusList(receivedItemShippingStatusMap.size() + orderMap.size());
-			int i = 0;
+			
+			ArrayList<ItemShippingStatus> tmpItemShippingStatusList = new ArrayList<ItemShippingStatus>();
+			
 			for(ItemShippingStatus itemInReceivedItemShippingStatusMap: receivedItemShippingStatusMap.values()){
-				itemShippingStatusList.innerItemShippingStatusList.set(i, new ItemShippingStatus(itemInReceivedItemShippingStatusMap)); 
-				i++;
-			}
-			for(Item itemInOrderMap: orderMap.values()){
-				itemShippingStatusList.innerItemShippingStatusList.set(i,new ItemShippingStatus(itemInOrderMap, false)); 
-				i++;
+				tmpItemShippingStatusList.add(itemInReceivedItemShippingStatusMap);
 			}
 			
+			for(Item itemInOrderMap: orderMap.values()){
+				tmpItemShippingStatusList.add(new ItemShippingStatus(itemInOrderMap, false));
+			}
+			
+			itemShippingStatusList.setItems(tmpItemShippingStatusList);
 			return itemShippingStatusList;
 		}
 	}

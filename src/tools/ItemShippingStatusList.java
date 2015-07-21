@@ -7,13 +7,13 @@ import java.util.ArrayList;
  *
  */
 public class ItemShippingStatusList {
-	public ArrayList<Item> innerItemShippingStatusList;
+	public ArrayList<ItemShippingStatus> innerItemShippingStatusList;
 	
 	/**
 	 * Constructor 
 	 */
 	public ItemShippingStatusList(){
-		innerItemShippingStatusList = new ArrayList<Item>();
+		innerItemShippingStatusList = new ArrayList<ItemShippingStatus>();
 	}
 	
 	/**
@@ -27,9 +27,9 @@ public class ItemShippingStatusList {
 	 * Constructor 
 	 * @param Item item
 	 */
-	public void addItem(Item item){
+	public void addItem(ItemShippingStatus item){
 		if(innerItemShippingStatusList == null){
-			innerItemShippingStatusList = new ArrayList<Item>();
+			innerItemShippingStatusList = new ArrayList<ItemShippingStatus>();
 		}
 		innerItemShippingStatusList.add(item);
 	}
@@ -37,7 +37,7 @@ public class ItemShippingStatusList {
 	/**
 	 * @param ArrayList<Item> otherItemShippingStatusList
 	 */
-	public void setItems(ArrayList<Item> otherItemShippingStatusList){
+	public void setItems(ArrayList<ItemShippingStatus> otherItemShippingStatusList){
 		innerItemShippingStatusList = otherItemShippingStatusList;
 	}
 	
@@ -46,5 +46,15 @@ public class ItemShippingStatusList {
 	 */
 	public void clearItems(){
 		innerItemShippingStatusList.clear();
+	}
+	
+	public String toString(){
+		String retStr = new String();
+		if(innerItemShippingStatusList != null){
+			for(ItemShippingStatus itemShippingStatus: innerItemShippingStatusList){
+				retStr += (itemShippingStatus.toString() + "\n");
+			}
+		}
+		return retStr;
 	}
 }
