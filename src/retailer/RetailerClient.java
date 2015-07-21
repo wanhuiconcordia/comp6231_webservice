@@ -30,9 +30,9 @@ public class RetailerClient {
 		}
 		
 		System.out.println(retailer.getCatalog(0).innerItemList);
-		//System.out.println(retailer.getProducts(""));
-		//System.out.println(retailer.signIn(0,"213"));
-		//System.out.println(retailer.signUp("name", "password", "street1", "street2", "city", "state", "zip", "country"));
+		System.out.println(retailer.getProducts("").innerItemList);
+		System.out.println(retailer.signIn(0,"213"));
+		System.out.println(retailer.signUp("name1", "password1", "street11", "street21", "city1", "state1", "zip1", "country1"));
 		//System.out.println(retailer.submitOrder(0, null));
 		
 	}
