@@ -21,6 +21,6 @@ public interface WarehouseInterface {
 	@WebMethod ItemList getProducts (String productID, String manufacturerName);
 	boolean registerRetailer (String retailerName);
 	boolean unregisterRegailer (String retailerName);
-	@WebMethod ItemList shippingGoods (ItemList itemList);
+	@WebMethod ItemList shippingGoods (ItemList itemList,String reatilername);
 	String getName ();
 }

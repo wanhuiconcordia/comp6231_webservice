@@ -20,4 +20,5 @@ public interface ManufacturerInterface {
 	@WebMethod Product getProductInfo (String aProdName) throws RemoteException;
 	@WebMethod boolean receivePayment (String orderNum, float totalPrice) throws RemoteException;
 	@WebMethod ArrayList<Product> getProductList() throws RemoteException;
+	@WebMethod String getName()throws RemoteException;
 }
