@@ -149,12 +149,17 @@ public class ManufacturerImpl implements ManufacturerInterface {
 	 * @see manufacturer.ManufacturerInterface#getProductList()
 	 */
 	@Override
-	public ArrayList<Product> getProductList(){
-		ArrayList<Product> productList = new ArrayList<Product>();
+	public ProductList getProductList(){
+		ProductList productList= new ProductList();
+		System.out.println("called the get prodcuts");
+		//ArrayList<Product> productList = new ArrayList<Product>();
 		for(Item item: purchaseOrderManager.itemsMap.values()){
-			productList.add(item.cloneProduct());
+			productList.addProduct(item.cloneProduct());
 		}
+		
 		return productList;
+		
+		
 	}
 	
 	/**

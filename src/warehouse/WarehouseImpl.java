@@ -15,6 +15,7 @@ import tools.Item;
 import tools.ItemList;
 import tools.LoggerClient;
 import tools.Product;
+import tools.ProductList;
 //Service Implementation
 @WebService(endpointInterface = "warehouse.WarehouseInterface")
 public class WarehouseImpl implements WarehouseInterface {
@@ -39,23 +40,29 @@ public class WarehouseImpl implements WarehouseInterface {
 		manufactures= new ArrayList<ManufacturerInterface>();
 		retailers=new ArrayList<String>();
 		if(connect()){
+			System.out.println("connected to the manufacturer");
 			inventoryManager=new InventoryManager(name);
 			for(ManufacturerInterface manufact: manufactures){
-				ArrayList<Product> productList = manufact.getProductList();
-				if(productList != null){
-					for(Product product: productList){
+				ProductList productList = manufact.getProductList();
+				System.out.println( productList.toString());
+				if(productList.innerProductList.size()!=0){
+					System.out.println( productList.toString());
+					for(Product product: productList.innerProductList){
+						System.out.println("the product is:"+product.productType);
 						String key = product.manufacturerName + product.productType;
 						Item inventoryItem = inventoryManager.inventoryItemMap.get(key);
+						//System.out.println("inventory item "+inventoryItem.productType);
 						if(inventoryItem == null){
+							System.out.println("item added");
 							inventoryManager.inventoryItemMap.put(key, new Item(product.manufacturerName,product.productType,product.unitPrice, 0));
 						}
 					}
 				}
 			}
 			replenish();
-		}else{
-			inventoryManager=new InventoryManager(name);
-		}
+			}else{
+				inventoryManager=new InventoryManager(name);
+			}
 
 
 	}
@@ -76,7 +83,7 @@ public class WarehouseImpl implements WarehouseInterface {
 					QName qname = new QName("http://manufacturer/", "ManufacturerImplService");
 					ManufacturerInterface manufacturer;
 					Service service = Service.create(url, qname);
-					manufacturer = service.getPort(ManufacturerInterface .class);
+					manufacturer = service.getPort(ManufacturerInterface.class);
 					System.out.println("Obtained a handle on server object: " + manufacturer.getName());
 					manufactures.add(manufacturer);
 					connected = true;
@@ -93,14 +100,17 @@ public class WarehouseImpl implements WarehouseInterface {
 		return connected;
 	}
 	public void replenish(){
+		System.out.println("enterd to replanish");
 		for(Item item: inventoryManager.inventoryItemMap.values()){
+			
 			if(item.quantity < minimumquantity){
+				System.out.println(" called the replanish");
 				for(ManufacturerInterface manufacturer:manufactures){
-					if(manufacturer == null){
-						loggerClient.write(name + ": Failed to get manufacturer from manufactures!");
-					}else{
+					
+					
 						if(manufacturer.getName().equals(item.manufacturerName))
-						{
+							{
+								
 							Item orderItem = new Item(item.manufacturerName,item.productType,item.unitPrice,item.quantity);
 							int oneTimeOrderCount = 40;
 							orderItem.quantity=oneTimeOrderCount;
@@ -110,7 +120,9 @@ public class WarehouseImpl implements WarehouseInterface {
 							}else{
 								if(manufacturer.receivePayment(orderNum, orderItem.unitPrice * orderItem.quantity)){
 									item.quantity=item.quantity + oneTimeOrderCount;
+									System.out.println("payment recevied");
 									inventoryManager.saveItems();
+									
 								}else{
 									loggerClient.write(name + ": manufacturer.receivePayment return null!");
 								}
@@ -118,7 +130,7 @@ public class WarehouseImpl implements WarehouseInterface {
 						}else{
 							System.out.println("manufacturer.getName()    !=     item.manufacturerName)");
 						}
-					}
+					
 				}
 			}
 
@@ -129,8 +141,8 @@ public class WarehouseImpl implements WarehouseInterface {
 		System.out.println("getProductsByID is called...");
 		ItemList returnitems=new ItemList();
 
-		if((productID!=null)){
-
+		if(!(productID.equals(""))){
+			System.out.println("entering if loop"+inventoryManager.inventoryItemMap.toString() );
 			Item inventoryItem = inventoryManager.inventoryItemMap.get(productID);
 			if(inventoryItem != null){
 
@@ -140,9 +152,9 @@ public class WarehouseImpl implements WarehouseInterface {
 
 		}
 		else{
-
+			System.out.println("entering loop"+inventoryManager.inventoryItemMap.toString() );
 			for(Item i:inventoryManager.inventoryItemMap.values()){
-
+				System.out.println("entered loop and item:"+i.productType);
 				returnitems.addItem(i);
 			}
 
@@ -191,7 +203,7 @@ public class WarehouseImpl implements WarehouseInterface {
 		// TODO Auto-generated method stub
 		ItemList returnitems=new ItemList();
 
-		if((productID!=null)){
+		if(!(productID.equals(""))){
 
 			Item inventoryItem = inventoryManager.inventoryItemMap.get(productID);
 			if(inventoryItem != null && inventoryItem.manufacturerName.equals(manufacturerName)){
@@ -253,7 +265,7 @@ public class WarehouseImpl implements WarehouseInterface {
 
 	@Override
 	public ItemList shippingGoods(ItemList itemlist,String reatilername) {
-
+		System.out.println("ship good called");
 		ItemList availableItems=new ItemList();
 		for(String rname:retailers){
 			if(rname.equals(reatilername))
@@ -290,7 +302,7 @@ public class WarehouseImpl implements WarehouseInterface {
 			loggerClient.write(name + ": available items:");
 			loggerClient.write(log);
 		}
-
+		System.out.println("goods shiped"+availableItems.toString());
 		return availableItems;
 
 	}

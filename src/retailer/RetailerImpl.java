@@ -150,7 +150,7 @@ public class RetailerImpl implements RetailerInterface {
 						itemRequestFromWarehouseList.innerItemList.set(i, orderItem);
 						i++;
 					}
-					
+					thisWarehouse.registerRetailer(name);
 					ItemList itemsGotFromCurrentWarehouse = thisWarehouse.shippingGoods(itemRequestFromWarehouseList, name);
 					if(itemsGotFromCurrentWarehouse == null){
 						System.out.println("warehouse return null");

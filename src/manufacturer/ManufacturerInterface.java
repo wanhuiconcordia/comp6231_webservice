@@ -18,6 +18,6 @@ public interface ManufacturerInterface {
 	@WebMethod String processPurchaseOrder (Item item);
 	@WebMethod Product getProductInfo (String aProdName);
 	@WebMethod boolean receivePayment (String orderNum, float totalPrice);
-	@WebMethod ArrayList<Product> getProductList();
+	@WebMethod ProductList getProductList();
 	@WebMethod String getName();
 }
