@@ -129,27 +129,32 @@ public class RetailerImpl implements RetailerInterface {
 			HashMap<String, Item> orderMap = new HashMap<String, Item>();
 			for(Item item: itemOrderList.innerItemList){
 				Item itemImpl = new Item(item);
-				System.out.println(itemImpl.toString());
-				if(item.quantity > 0){
-					Item itemInOrderMap = orderMap.get(item.productID);
+				System.out.println("item orderd"+itemImpl.toString());
+				if(itemImpl.quantity > 0){
+					Item itemInOrderMap = orderMap.get(itemImpl.productID);
 					if(itemInOrderMap == null){
-						orderMap.put(item.productID, new Item(item));
+						orderMap.put(item.productID, new Item(itemImpl));
 					}else{
-						itemInOrderMap.quantity += item.quantity;
+						itemInOrderMap.quantity += itemImpl.quantity;
 					}
 				}
 			}
+			System.out.println("order map:" +orderMap);
 			
 			for(WarehouseInterface thisWarehouse: warehouseList){
 				int itemRequestFromWarehouseCount = orderMap.size();
+				
 				if(itemRequestFromWarehouseCount > 0)
 				{
 					ItemList itemRequestFromWarehouseList = new ItemList(itemRequestFromWarehouseCount);
+					System.out.println("itemRequestFromWarehouseList size : "+ itemRequestFromWarehouseList.innerItemList.size());
 					int i = 0;
 					for(Item orderItem: orderMap.values()){
-						itemRequestFromWarehouseList.innerItemList.set(i, orderItem);
+						System.out.println("orderItem: "+ orderItem);
+						itemRequestFromWarehouseList.innerItemList.add(i, orderItem);
 						i++;
 					}
+					System.out.println("itemRequestFromWarehouseList size after adding: "+ itemRequestFromWarehouseList.innerItemList.size());
 					thisWarehouse.registerRetailer(name);
 					ItemList itemsGotFromCurrentWarehouse = thisWarehouse.shippingGoods(itemRequestFromWarehouseList, name);
 					if(itemsGotFromCurrentWarehouse == null){
