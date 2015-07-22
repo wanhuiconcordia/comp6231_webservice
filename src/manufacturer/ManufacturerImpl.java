@@ -12,6 +12,7 @@ import org.dom4j.Element;
 import org.omg.CORBA.ORB;
 
 import tools.Item;
+import tools.ItemPrice;
 import tools.LoggerClient;
 import tools.Product;
 import tools.ProductList;
@@ -27,6 +28,7 @@ public class ManufacturerImpl implements ManufacturerInterface {
 	private LoggerClient loggerClient;
 	private PurchaseOrderManager purchaseOrderManager;
 	Random random ;
+	ItemPrice itemPrice;
 	/**
 	 * Constructor
 	 * @param name
@@ -151,15 +153,10 @@ public class ManufacturerImpl implements ManufacturerInterface {
 	@Override
 	public ProductList getProductList(){
 		ProductList productList= new ProductList();
-		System.out.println("called the get prodcuts");
-		//ArrayList<Product> productList = new ArrayList<Product>();
 		for(Item item: purchaseOrderManager.itemsMap.values()){
 			productList.addProduct(item.cloneProduct());
-		}
-		
-		return productList;
-		
-		
+		}		
+		return productList;		
 	}
 	
 	/**
@@ -180,7 +177,21 @@ public class ManufacturerImpl implements ManufacturerInterface {
 				for(Element subElem: nodes){
 					String manufacturerName = name;
 					String productType = subElem.element("productType").getText();
-					float unitPrice = randm.nextInt(300 - 200 + 1) + 200;
+					float unitPrice ;
+					if(productType.equalsIgnoreCase("TV"))
+					{
+						itemPrice = new ItemPrice("B00LEWO8LU");						
+					}else if(productType.equalsIgnoreCase("DVD player")){
+						itemPrice = new ItemPrice("B004YF20I2");
+					}else{
+						itemPrice = new ItemPrice("B00M9AB8AU");
+					}
+					try {
+						unitPrice = itemPrice.fetchPrice();
+					} catch (Exception e) {
+						unitPrice = randm.nextInt(300 - 200 + 1) + 200;
+						loggerClient.write(name + ": Error while fetching price from Amazon Api " + e.getMessage());
+					}					
 					int quantity = randm.nextInt(150 - 10 + 1) + 10;
 					Item item = new Item(manufacturerName, productType, unitPrice, quantity);
 					System.out.println(item.toString() + " is added from : product_info.xml");
@@ -196,7 +207,20 @@ public class ManufacturerImpl implements ManufacturerInterface {
 			for(Element subElem: nodes){
 				String manufacturerName = name;
 				String productType = subElem.element("productType").getText();
-				float unitPrice = randm.nextInt(300 - 200 + 1) + 200;
+				float unitPrice ;
+				if(productType.equalsIgnoreCase("TV")){
+					itemPrice = new ItemPrice("B00LEWO8LU");						
+				}else if(productType.equalsIgnoreCase("DVD player"))					{
+					itemPrice = new ItemPrice("B004YF20I2");
+				}else{
+					itemPrice = new ItemPrice("B00M9AB8AU");
+				}
+				try {
+					unitPrice = itemPrice.fetchPrice();
+				} catch (Exception e) {
+					unitPrice = randm.nextInt(300 - 200 + 1) + 200;
+					loggerClient.write(name + ": Error while fetching price from Amazon Api " + e.getMessage());
+				}
 				if(purchaseOrderManager.itemsMap.get(productType) == null){
 					purchaseOrderManager.itemsMap.put(productType, new Item(manufacturerName, productType, unitPrice, randm.nextInt(150 - 10 + 1) + 10));
 					newProductAdded = true;
