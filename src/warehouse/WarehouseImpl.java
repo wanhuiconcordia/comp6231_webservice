@@ -17,7 +17,7 @@ import tools.LoggerClient;
 import tools.Product;
 //Service Implementation
 @WebService(endpointInterface = "warehouse.WarehouseInterface")
-public class WareHouseImpl implements WarehouseInterface {
+public class WarehouseImpl implements WarehouseInterface {
 
 
 	private InventoryManager inventoryManager;
@@ -34,7 +34,7 @@ public class WareHouseImpl implements WarehouseInterface {
 	 * @param name
 	 * @throws RemoteException 
 	 */
-	public WareHouseImpl(String name) throws RemoteException{
+	public WarehouseImpl(String name){
 		this. name = name;
 		manufactures= new ArrayList<ManufacturerInterface>();
 		retailers=new ArrayList<String>();
@@ -79,6 +79,7 @@ public class WareHouseImpl implements WarehouseInterface {
 					manufacturer = service.getPort(ManufacturerInterface .class);
 					System.out.println("Obtained a handle on server object: " + manufacturer.getName());
 					manufactures.add(manufacturer);
+					connected = true;
 
 				}catch (MalformedURLException e1) {
 					e1.printStackTrace();
@@ -98,31 +99,24 @@ public class WareHouseImpl implements WarehouseInterface {
 					if(manufacturer == null){
 						loggerClient.write(name + ": Failed to get manufacturer from manufactures!");
 					}else{
-						try {
-							if(manufacturer.getName().equals(item.manufacturerName))
-							{
-
-
-								Item orderItem = new Item(item.manufacturerName,item.productType,item.unitPrice,item.quantity);
-
-								int oneTimeOrderCount = 40;
-								orderItem.quantity=oneTimeOrderCount;
-								String orderNum = manufacturer.processPurchaseOrder(orderItem);
-								if(orderNum == null){
-									loggerClient.write(name + ": manufacturer.processPurchaseOrder return null!");
+						if(manufacturer.getName().equals(item.manufacturerName))
+						{
+							Item orderItem = new Item(item.manufacturerName,item.productType,item.unitPrice,item.quantity);
+							int oneTimeOrderCount = 40;
+							orderItem.quantity=oneTimeOrderCount;
+							String orderNum = manufacturer.processPurchaseOrder(orderItem);
+							if(orderNum == null){
+								loggerClient.write(name + ": manufacturer.processPurchaseOrder return null!");
+							}else{
+								if(manufacturer.receivePayment(orderNum, orderItem.unitPrice * orderItem.quantity)){
+									item.quantity=item.quantity + oneTimeOrderCount;
+									inventoryManager.saveItems();
 								}else{
-									if(manufacturer.receivePayment(orderNum, orderItem.unitPrice * orderItem.quantity)){
-										item.quantity=item.quantity + oneTimeOrderCount;
-										inventoryManager.saveItems();
-									}else{
-										loggerClient.write(name + ": manufacturer.receivePayment return null!");
-									}
+									loggerClient.write(name + ": manufacturer.receivePayment return null!");
 								}
-
 							}
-						} catch (RemoteException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+						}else{
+							System.out.println("manufacturer.getName()    !=     item.manufacturerName)");
 						}
 					}
 				}
@@ -132,6 +126,7 @@ public class WareHouseImpl implements WarehouseInterface {
 	}
 	@Override
 	public ItemList getProductsByID(String productID) {
+		System.out.println("getProductsByID is called...");
 		ItemList returnitems=new ItemList();
 
 		if((productID!=null)){
@@ -152,6 +147,9 @@ public class WareHouseImpl implements WarehouseInterface {
 			}
 
 		}
+		
+		System.out.println("return:");
+		System.out.println(returnitems.toString());
 		return returnitems;
 
 	}
@@ -174,20 +172,15 @@ public class WareHouseImpl implements WarehouseInterface {
 		// TODO Auto-generated method stub
 		ItemList returnitems=new ItemList();
 		for(ManufacturerInterface manufacture:manufactures){
-			try {
-				if(manufacture.getName().equals(manufacturerName)){
+			if(manufacture.getName().equals(manufacturerName)){
 
-					for(Item inventoryitems:inventoryManager.inventoryItemMap.values()){
+				for(Item inventoryitems:inventoryManager.inventoryItemMap.values()){
 
-						if(inventoryitems.manufacturerName.equals(manufacturerName)){
-							returnitems.addItem(inventoryitems);
-						}
+					if(inventoryitems.manufacturerName.equals(manufacturerName)){
+						returnitems.addItem(inventoryitems);
 					}
-
 				}
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+
 			}
 		}
 		return returnitems;
@@ -265,9 +258,6 @@ public class WareHouseImpl implements WarehouseInterface {
 		for(String rname:retailers){
 			if(rname.equals(reatilername))
 			{
-
-
-
 				for(Item item: itemlist.innerItemList){
 					String key = item.manufacturerName+ item.productType;
 					Item inventoryItem = inventoryManager.inventoryItemMap.get(key);

@@ -11,8 +11,6 @@ import tools.LoggerClient;
 
 public class RetailerServer {
 	
-
-
 	public static void main(String []args){
 		RetailerImpl retailerImpl;
 		String retailerName;

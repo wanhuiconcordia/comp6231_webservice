@@ -1,8 +1,6 @@
 package manufacturer;
 
 import java.net.MalformedURLException;
-import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -37,7 +35,7 @@ public class ManufacturerImpl implements ManufacturerInterface {
 	 * @throws MalformedURLException
 	 * @throws NotBoundException
 	 */
-	public ManufacturerImpl(String name, LoggerClient loggerClient)throws RemoteException, MalformedURLException, NotBoundException{
+	public ManufacturerImpl(String name, LoggerClient loggerClient){
 		this.name = name;
 		this.loggerClient = loggerClient;
 		purchaseOrderMap = new HashMap<String, Item>();
@@ -62,7 +60,8 @@ public class ManufacturerImpl implements ManufacturerInterface {
 	 * @see manufacturer.ManufacturerInterface#processPurchaseOrder(tools.Item)
 	 */
 	@Override
-	public String processPurchaseOrder(Item purchaseItem) throws RemoteException {
+	public String processPurchaseOrder(Item purchaseItem) {
+		System.out.println("processPurchaseOrder is called...");
 		if(!purchaseItem.getManufacturerName().equals(name)){
 			System.out.println(name + ": Manufacturer name is not equal to current manufacturer name:" + purchaseItem.getManufacturerName());
 			loggerClient.write(name + ": Manufacturer name is not equal to current manufacturer name:" + purchaseItem.getManufacturerName());
@@ -77,10 +76,10 @@ public class ManufacturerImpl implements ManufacturerInterface {
 				loggerClient.write(name + ": The order price (" + purchaseItem.getUnitPrice() + ") is lower than defined price(" + availableItem.getUnitPrice() + ")");
 				return null;
 			}else{
-				if(purchaseItem.getQuantity() >= availableItem.getQuantity()){
+				if(purchaseItem.quantity >= availableItem.quantity){
 					int oneTimeQuantity = 100;
 					if(produce(purchaseItem.getProductType(), oneTimeQuantity)){
-						availableItem.setQuantity(availableItem.getQuantity() + oneTimeQuantity);
+						availableItem.quantity =availableItem.quantity + oneTimeQuantity;
 						
 						purchaseOrderManager.saveItems();
 						
@@ -91,7 +90,7 @@ public class ManufacturerImpl implements ManufacturerInterface {
 					}
 				}
 				
-				if(purchaseItem.getQuantity() >= availableItem.getQuantity()){
+				if(purchaseItem.quantity >= availableItem.quantity){
 					return null;
 				}else{
 					String orderNumString = new Integer(orderNum++).toString();
@@ -106,7 +105,7 @@ public class ManufacturerImpl implements ManufacturerInterface {
 	 * @see manufacturer.ManufacturerInterface#getProductInfo(java.lang.String)
 	 */
 	@Override
-	public Product getProductInfo(String productType) throws RemoteException {
+	public Product getProductInfo(String productType){
 		Item avaiableItem = purchaseOrderManager.itemsMap.get(productType);
 		if(avaiableItem == null){
 			loggerClient.write(name + ": " + productType + " does not exist in this manufacturer!");
@@ -119,15 +118,15 @@ public class ManufacturerImpl implements ManufacturerInterface {
 	 * @see manufacturer.ManufacturerInterface#receivePayment(java.lang.String, float)
 	 */
 	@Override
-	public boolean receivePayment(String orderNum, float totalPrice) throws RemoteException {
+	public boolean receivePayment(String orderNum, float totalPrice){
 		Item waitingForPayItem = purchaseOrderMap.get(orderNum);
 		if(waitingForPayItem == null){
 			loggerClient.write(name + ": " + orderNum + " does not exist in purchaseOrderMap of current manufacturer!");
 			return false;
 		}else{
-			if(waitingForPayItem.getQuantity() * waitingForPayItem.getUnitPrice() == totalPrice){
+			if(waitingForPayItem.quantity * waitingForPayItem.getUnitPrice() == totalPrice){
 				Item inhandItem = purchaseOrderManager.itemsMap.get(waitingForPayItem.getProductType());
-				inhandItem.setQuantity(inhandItem.getQuantity() - waitingForPayItem.getQuantity());
+				inhandItem.quantity = inhandItem.quantity - waitingForPayItem.quantity;
 				purchaseOrderManager.saveItems();
 				loggerClient.write(name + ": received pament. OrderNum:" + orderNum + ", totalPrice:" + totalPrice);
 				purchaseOrderMap.remove(orderNum);
@@ -150,7 +149,7 @@ public class ManufacturerImpl implements ManufacturerInterface {
 	 * @see manufacturer.ManufacturerInterface#getProductList()
 	 */
 	@Override
-	public ArrayList<Product> getProductList() throws RemoteException {
+	public ArrayList<Product> getProductList(){
 		ArrayList<Product> productList = new ArrayList<Product>();
 		for(Item item: purchaseOrderManager.itemsMap.values()){
 			productList.add(item.cloneProduct());

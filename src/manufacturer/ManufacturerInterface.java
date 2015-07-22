@@ -1,6 +1,5 @@
 package manufacturer;
 
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import javax.jws.WebMethod;
@@ -16,9 +15,9 @@ import tools.ProductList;
 @SOAPBinding(style = Style.RPC)
 
 public interface ManufacturerInterface {
-	@WebMethod String processPurchaseOrder (Item item) throws RemoteException;
-	@WebMethod Product getProductInfo (String aProdName) throws RemoteException;
-	@WebMethod boolean receivePayment (String orderNum, float totalPrice) throws RemoteException;
-	@WebMethod ArrayList<Product> getProductList() throws RemoteException;
-	@WebMethod String getName()throws RemoteException;
+	@WebMethod String processPurchaseOrder (Item item);
+	@WebMethod Product getProductInfo (String aProdName);
+	@WebMethod boolean receivePayment (String orderNum, float totalPrice);
+	@WebMethod ArrayList<Product> getProductList();
+	@WebMethod String getName();
 }

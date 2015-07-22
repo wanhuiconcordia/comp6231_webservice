@@ -15,7 +15,7 @@ public class Warehouse {
 		String url = "http://localhost:" + port + "/ws/warehouse";
 		System.out.println("Please input the warehouse name:");
 		String warehouseName = in.nextLine();
-		Endpoint.publish(url, new WareHouseImpl(warehouseName));
+		Endpoint.publish(url, new WarehouseImpl(warehouseName));
 		System.out.println(warehouseName + " is published. The url is:" + url);
 	}
 }

@@ -11,10 +11,7 @@ import javax.jws.WebService;
 import javax.xml.namespace.QName;
 import javax.xml.ws.Service;
 
-import manufacturer.ManufacturerInterface;
 import retailer.CustomerManager;
-
-
 import tools.Customer;
 import tools.Item;
 import tools.ItemList;
@@ -22,7 +19,6 @@ import tools.ItemShippingStatus;
 import tools.ItemShippingStatusList;
 import tools.LoggerClient;
 import tools.SignUpResult;
-import warehouse.WareHouseImpl;
 import warehouse.WarehouseInterface;
 
 @WebService(endpointInterface = "retailer.RetailerInterface")
@@ -51,13 +47,12 @@ public class RetailerImpl implements RetailerInterface {
 	 * @param in
 	 */
 	public void connectWarehouses(){
-		WarehouseInterface wh1 = new WareHouseImpl("wh1");
-
-		WarehouseInterface wh2 = new WareHouseImpl("wh2");
-		warehouseList.add(wh1);
-		warehouseList.add(wh2);
+//		WarehouseInterface wh1 = new WareHouseImpl("wh1");
+//
+//		WarehouseInterface wh2 = new WareHouseImpl("wh2");
+//		warehouseList.add(wh1);
+//		warehouseList.add(wh2);
 		
-		/*
 		Scanner in = new Scanner(System.in);
 		while(true){
 			System.out.print("Please input the port number of the warehouse service to establish connection (q to finish):");
@@ -67,29 +62,29 @@ public class RetailerImpl implements RetailerInterface {
 				break;
 			}else{
 				String urlStr = "http://localhost:" + port + "/ws/warehouse?wsdl";
-				URL url;
 				try {
-					url = new URL(urlStr);
-					QName qname = new QName("http://manufacturer/", "ManufacturerImplService");
+					URL url = new URL(urlStr);
+					QName qname = new QName("http://warehouse/", "WarehouseImplService");
 					WarehouseInterface warehouse;
 					Service service = Service.create(url, qname);
-					warehouse = service.getPort(WarehouseInterface .class);
+					warehouse = service.getPort(WarehouseInterface.class);
 					System.out.println("Obtained a handle on server object: " + warehouse.getName());
 					warehouseList.add(warehouse);
 				}catch (MalformedURLException e1) {
 					e1.printStackTrace();
 				}catch (Exception e) {
-					System.out.println("Failed to access the WSDL at:" + urlStr);
+					//System.out.println("Failed to access the WSDL at:" + urlStr);
+					e.printStackTrace();
 					return;
 				}
 			}
 		}	
 		in.close();
-		*/
 	}
 
 	@Override
 	public ItemList getCatalog(int customerReferenceNumber) {
+		System.out.println("getCatalog is called...");
 		ItemList itemList = new ItemList();
 		HashMap<String, Item> itemsMap = new HashMap<String, Item>();
 
@@ -156,7 +151,7 @@ public class RetailerImpl implements RetailerInterface {
 						i++;
 					}
 					
-					ItemList itemsGotFromCurrentWarehouse = thisWarehouse.shippingGoods(itemRequestFromWarehouseList);
+					ItemList itemsGotFromCurrentWarehouse = thisWarehouse.shippingGoods(itemRequestFromWarehouseList, name);
 					if(itemsGotFromCurrentWarehouse == null){
 						System.out.println("warehouse return null");
 					}else if(itemsGotFromCurrentWarehouse.innerItemList.isEmpty()){
