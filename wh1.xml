@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<items>
+  <item>
+    <productID>-954075102</productID>
+    <manufacturerName>mf1</manufacturerName>
+    <productType>video camera</productType>
+    <unitPrice>270.0</unitPrice>
+    <quantity>50</quantity>
+  </item>
+  <item>
+    <productID>-636457147</productID>
+    <manufacturerName>mh1</manufacturerName>
+    <productType>DVD player</productType>
+    <unitPrice>281.0</unitPrice>
+    <quantity>20</quantity>
+  </item>
+  <item>
+    <productID>103752250</productID>
+    <manufacturerName>mf1</manufacturerName>
+    <productType>TV</productType>
+    <unitPrice>208.0</unitPrice>
+    <quantity>40</quantity>
+  </item>
+  <item>
+    <productID>103811832</productID>
+    <manufacturerName>mh1</manufacturerName>
+    <productType>TV</productType>
+    <unitPrice>256.0</unitPrice>
+    <quantity>20</quantity>
+  </item>
+  <item>
+    <productID>-894622585</productID>
+    <manufacturerName>mf1</manufacturerName>
+    <productType>DVD player</productType>
+    <unitPrice>275.0</unitPrice>
+    <quantity>40</quantity>
+  </item>
+  <item>
+    <productID>-1965192352</productID>
+    <manufacturerName>mh1</manufacturerName>
+    <productType>video camera</productType>
+    <unitPrice>203.0</unitPrice>
+    <quantity>20</quantity>
+  </item>
+</items>

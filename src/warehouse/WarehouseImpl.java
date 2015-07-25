@@ -39,6 +39,7 @@ public class WarehouseImpl implements WarehouseInterface {
 		this. name = name;
 		manufactures= new ArrayList<ManufacturerInterface>();
 		retailers=new ArrayList<String>();
+		loggerClient=new LoggerClient();
 		if(connect()){
 			System.out.println("connected to the manufacturer");
 			inventoryManager=new InventoryManager(name);
@@ -274,14 +275,19 @@ public class WarehouseImpl implements WarehouseInterface {
 					String key = item.manufacturerName+ item.productType;
 					Item inventoryItem = inventoryManager.inventoryItemMap.get(key);
 					if(inventoryItem != null){
+						System.out.println("inventory item to send"+inventoryItem.productType+"   "+item.productType);;
 						if(inventoryItem.quantity < item.quantity){
+							System.out.println("added item");
 							availableItems.addItem(new Item(inventoryItem.manufacturerName,inventoryItem.productType,inventoryItem.unitPrice,inventoryItem.quantity));
 							inventoryItem.quantity=0;
 						}else{
 							availableItems.addItem(new Item(item.manufacturerName,item.productType,item.unitPrice,item.quantity));
 							inventoryItem.quantity=(inventoryItem.quantity - item.quantity);
 						}
-						inventoryManager.saveItems();
+					synchronized (inventoryItem) {
+						
+							inventoryManager.saveItems();
+						}
 					}
 				}
 			}
@@ -291,14 +297,14 @@ public class WarehouseImpl implements WarehouseInterface {
 			}
 		}
 		replenish();
-
+		System.out.println(availableItems.toString());
 		String log = new String();
 		for(Item item: availableItems.innerItemList){
 			log = log + "Manufacturer name:" + item.manufacturerName
 					+ ", Product type:" + item.productType 
 					+ ", Unit price:" + item.unitPrice+ ",	quantity:" + item.quantity + "</br>";
 		}
-		if(log.length() > 0){
+		if(log.length() > 0&& !(availableItems.innerItemList.isEmpty())){
 			loggerClient.write(name + ": available items:");
 			loggerClient.write(log);
 		}

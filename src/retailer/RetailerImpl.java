@@ -155,8 +155,11 @@ public class RetailerImpl implements RetailerInterface {
 						i++;
 					}
 					System.out.println("itemRequestFromWarehouseList size after adding: "+ itemRequestFromWarehouseList.innerItemList.size());
-					thisWarehouse.registerRetailer(name);
-					ItemList itemsGotFromCurrentWarehouse = thisWarehouse.shippingGoods(itemRequestFromWarehouseList, name);
+					ItemList itemsGotFromCurrentWarehouse=null;
+					if(thisWarehouse.registerRetailer(name)){
+					
+						itemsGotFromCurrentWarehouse = thisWarehouse.shippingGoods(itemRequestFromWarehouseList, name);
+					}
 					if(itemsGotFromCurrentWarehouse == null){
 						System.out.println("warehouse return null");
 					}else if(itemsGotFromCurrentWarehouse.innerItemList.isEmpty()){

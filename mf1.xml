@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<items>
+  <item>
+    <manufacturerName>mf1</manufacturerName>
+    <productType>TV</productType>
+    <unitPrice>208.0</unitPrice>
+    <quantity>1</quantity>
+  </item>
+  <item>
+    <manufacturerName>mf1</manufacturerName>
+    <productType>video camera</productType>
+    <unitPrice>270.0</unitPrice>
+    <quantity>18</quantity>
+  </item>
+  <item>
+    <manufacturerName>mf1</manufacturerName>
+    <productType>DVD player</productType>
+    <unitPrice>275.0</unitPrice>
+    <quantity>91</quantity>
+  </item>
+</items>
