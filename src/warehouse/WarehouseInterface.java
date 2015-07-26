@@ -12,15 +12,54 @@ import tools.ItemList;
 @SOAPBinding(style = Style.RPC)
 
 public interface WarehouseInterface {
+	/**
+	 * get products by ID
+	 * @param productID
+	 * @return ItemList
+	 */
 	@WebMethod ItemList getProductsByID (String productID);
-	// get the specific product by id, if null/empty, all returned
+	
+	/**
+	 * get products by type
+	 * @param productType
+	 * @return ItemList
+	 */
 	@WebMethod ItemList getProductsByType (String productType);
-	// get a list of products by product type, if null/empty,all returned
+	/**
+	 * get products by ManufacturerName
+	 * @param manufacturerName
+	 * @return ItemList
+	 */
 	@WebMethod ItemList getProductsByRegisteredManufacturers (String manufacturerName);
-	//get a list of products by manufacturer name,if null/empty, all returned
+	/**
+	 * get products by ManufacturerName and product ID
+	 * @param manufacturerName
+	 * @param productID
+	 * @return ItemList
+	 */
 	@WebMethod ItemList getProducts (String productID, String manufacturerName);
+	/**
+	 * registerRetailer
+	 * @param retailerName
+	 * @return true if success otherwise return false;
+	 */
 	boolean registerRetailer (String retailerName);
+	/**
+	 * unregisterRegailer
+	 * @param retailerName
+	 * @return true if success otherwise return false;
+	 */
 	boolean unregisterRegailer (String retailerName);
+	/**
+	 * shippingGoods
+	 * @param itemList
+	 * @param reatilername
+	 * @return ItemList
+	 */
 	@WebMethod ItemList shippingGoods (ItemList itemList,String reatilername);
+	/**
+	 * Get name
+	 * @return warehouse's name
+	 */
 	String getName ();
 }

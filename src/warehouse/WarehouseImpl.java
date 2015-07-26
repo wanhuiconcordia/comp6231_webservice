@@ -31,9 +31,7 @@ public class WarehouseImpl implements WarehouseInterface {
 
 	/**
 	 * Constructor
-	 * @param orb2
 	 * @param name
-	 * @throws RemoteException 
 	 */
 	public WarehouseImpl(String name){
 		this. name = name;
@@ -67,6 +65,10 @@ public class WarehouseImpl implements WarehouseInterface {
 
 
 	}
+	
+	/**
+	 * Provide interface for user to input the manufacturer' ports for connecting
+	 */
 	public boolean connect(){
 		boolean connected= false;
 		Scanner in = new Scanner(System.in);
@@ -100,6 +102,11 @@ public class WarehouseImpl implements WarehouseInterface {
 		in.close();
 		return connected;
 	}
+	
+	
+	/**
+	 * replenish inventory 
+	 */
 	public void replenish(){
 		System.out.println("enterd to replanish");
 		for(Item item: inventoryManager.inventoryItemMap.values()){
@@ -137,6 +144,9 @@ public class WarehouseImpl implements WarehouseInterface {
 
 		}
 	}
+	/* (non-Javadoc)
+	 * @see warehouse.WarehouseInterface#getProductsByID(java.lang.String)
+	 */
 	@Override
 	public ItemList getProductsByID(String productID) {
 		System.out.println("getProductsByID is called...");
@@ -167,6 +177,9 @@ public class WarehouseImpl implements WarehouseInterface {
 
 	}
 
+	/* (non-Javadoc)
+	 * @see warehouse.WarehouseInterface#getProductsByType(java.lang.String)
+	 */
 	@Override
 	public ItemList getProductsByType(String productType) {
 		// TODO Auto-generated method stub
@@ -182,6 +195,9 @@ public class WarehouseImpl implements WarehouseInterface {
 		return returnitems;
 	}
 
+	/* (non-Javadoc)
+	 * @see warehouse.WarehouseInterface#getProductsByRegisteredManufacturers(java.lang.String)
+	 */
 	@Override
 	public ItemList getProductsByRegisteredManufacturers(String manufacturerName){
 		// TODO Auto-generated method stub
@@ -204,6 +220,9 @@ public class WarehouseImpl implements WarehouseInterface {
 		return returnitems;
 	}
 
+	/* (non-Javadoc)
+	 * @see warehouse.WarehouseInterface#getProducts(java.lang.String, java.lang.String)
+	 */
 	@Override
 	public ItemList getProducts(String productID, String manufacturerName) {
 		// TODO Auto-generated method stub
@@ -235,6 +254,9 @@ public class WarehouseImpl implements WarehouseInterface {
 		return returnitems;
 	}
 
+	/* (non-Javadoc)
+	 * @see warehouse.WarehouseInterface#registerRetailer(java.lang.String)
+	 */
 	@Override
 	public boolean registerRetailer(String retailerName) {
 		if(retailerName.isEmpty()){
@@ -251,6 +273,9 @@ public class WarehouseImpl implements WarehouseInterface {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see warehouse.WarehouseInterface#unregisterRegailer(java.lang.String)
+	 */
 	@Override
 	public boolean unregisterRegailer(String retailerName) {
 		// TODO Auto-generated method stub

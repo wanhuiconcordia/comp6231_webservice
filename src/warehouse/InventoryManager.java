@@ -9,9 +9,18 @@ import org.dom4j.io.OutputFormat;
 import org.dom4j.tree.DefaultElement;
 
 import tools.*;
+
+/**
+ * @author comp6231.team5
+ * Maintain inventory.
+ */
 public class InventoryManager {
 	public HashMap<String, Item> inventoryItemMap;
 	private String warehouseName;
+	/**
+	 * Constructor
+	 * @param name
+	 */
 	public InventoryManager(String name){
 		
 		inventoryItemMap = new HashMap<String, Item>();
@@ -19,6 +28,9 @@ public class InventoryManager {
 		loadItems();
 		
 	}
+	/**
+	 * Load items from an XML file to the inventoryItemMap
+	 */
 	private void loadItems(){
 		XmlFileController xmlfile = new XmlFileController(warehouseName + ".xml");
 		Element root = xmlfile.Read();
@@ -34,6 +46,11 @@ public class InventoryManager {
 			}
 		}
 	}
+	/**
+	 * Convert data to XML Element
+	 * @param i
+	 * @return Element
+	 */
 	public Element toXmlElement(Item i){
 		DefaultElement customerElem = new DefaultElement("item");
 		Element subElem = customerElem.addElement("productID");
@@ -52,6 +69,9 @@ public class InventoryManager {
 		return customerElem;
 		
 	}
+	/**
+	 * Save inventoryItemMap to an XML file 
+	 */
 	public void saveItems()
 	{
 		XmlFileController xmlFileControler = new XmlFileController(warehouseName + ".xml");
