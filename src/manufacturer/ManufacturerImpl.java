@@ -33,9 +33,6 @@ public class ManufacturerImpl implements ManufacturerInterface {
 	 * Constructor
 	 * @param name
 	 * @param loggerClient
-	 * @throws RemoteException
-	 * @throws MalformedURLException
-	 * @throws NotBoundException
 	 */
 	public ManufacturerImpl(String name, LoggerClient loggerClient){
 		this.name = name;
