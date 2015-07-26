@@ -17,13 +17,6 @@ public class ItemShippingStatusList {
 	}
 	
 	/**
-	 * @param i
-	 */
-	public ItemShippingStatusList(int i) {
-		innerItemShippingStatusList = new ArrayList(i);
-	}
-
-	/**
 	 * Constructor 
 	 * @param Item item
 	 */

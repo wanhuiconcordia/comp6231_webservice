@@ -7,7 +7,6 @@ import java.util.Scanner;
 import javax.xml.namespace.QName;
 import javax.xml.ws.Service;
 
-import retailer.RetailerInterface;
 import tools.Item;
 import tools.ItemList;
 import tools.LoggerClient;
