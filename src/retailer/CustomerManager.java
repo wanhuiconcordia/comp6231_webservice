@@ -9,23 +9,33 @@ import org.dom4j.Element;
 import org.dom4j.io.OutputFormat;
 
 import tools.Customer;
-import tools.Customer;
 import tools.SignUpResult;
 
 import tools.XmlFileController;
 
+/**
+ * @author comp6231.team5
+ * Maintain customers
+ */
 public class CustomerManager {
 
 	private ArrayList<Customer> customers;
 
 	private String fileName;
 
+	/**
+	 * Constructor
+	 * @param String fileName
+	 */
 	public CustomerManager(String fileName){
 		customers = new ArrayList<Customer>();
 		this.fileName = fileName;
 		loadCustomers();
 	}
 
+	/**
+	 * Save customers information to an XML file. 
+	 */
 	public void saveCustomers()
 	{
 		XmlFileController xmlFileControler = new XmlFileController(fileName);
@@ -44,6 +54,9 @@ public class CustomerManager {
 		}
 	}
 
+	/**
+	 * Load customers information from an XML file 
+	 */
 	public void loadCustomers()
 	{
 		XmlFileController xmlfile = new XmlFileController(fileName);
@@ -65,6 +78,18 @@ public class CustomerManager {
 		}
 	}
 
+	/**
+	 * Process customer registration
+	 * @param name
+	 * @param password
+	 * @param street1
+	 * @param street2
+	 * @param city
+	 * @param state
+	 * @param zip
+	 * @param country
+	 * @return SignUpResult
+	 */
 	public synchronized SignUpResult register(String name, String password, String street1, String street2, String city, String state, String zip, String country){
 		for(Customer customer: customers){
 			if(customer.name.equals(name) && customer.password.equals(password)){
@@ -77,6 +102,12 @@ public class CustomerManager {
 		return new SignUpResult(true, customerReferenceNumber , "Sign up successfully.");
 	}
 
+	/**
+	 * Find the customerReferenceNumber from the customers list.
+	 * @param customerReferenceNumber
+	 * @param password
+	 * @return Customer if found otherwise return null
+	 */
 	public synchronized Customer find(int customerReferenceNumber, String password){
 		for(Customer customer: customers){
 			if(customer.customerReferenceNumber == customerReferenceNumber
@@ -87,6 +118,11 @@ public class CustomerManager {
 		return null;
 	}
 
+	/**
+	 * Find the customerReferenceNumber from the customers list.
+	 * @param customerReferenceNumber
+	 * @return Customer if found otherwise return null
+	 */
 	public synchronized boolean find(int customerReferenceNumber){
 		for(Customer customer: customers){
 			if(customer.customerReferenceNumber== customerReferenceNumber){
@@ -96,6 +132,11 @@ public class CustomerManager {
 		return false;
 	}
 
+	/**
+	 * get customer by referenceNumber
+	 * @param customerReferenceNumber
+	 * @return Customer if matching customerReferenceNumber otherwise return null
+	 */
 	public synchronized Customer getCustomerByReferenceNumber(int customerReferenceNumber){
 		for(Customer customer: customers){
 			if(customer.customerReferenceNumber == customerReferenceNumber){

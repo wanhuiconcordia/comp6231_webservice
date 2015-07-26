@@ -2,7 +2,6 @@ package warehouse;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -31,9 +30,7 @@ public class WarehouseImpl implements WarehouseInterface {
 
 	/**
 	 * Constructor
-	 * @param orb2
 	 * @param name
-	 * @throws RemoteException 
 	 */
 	public WarehouseImpl(String name){
 		this. name = name;
@@ -50,7 +47,7 @@ public class WarehouseImpl implements WarehouseInterface {
 					System.out.println( productList.toString());
 					for(Product product: productList.innerProductList){
 						System.out.println("the product is:"+product.productType);
-						String key = product.manufacturerName + product.productType;
+						String key = String.valueOf(product.manufacturerName + product.productType.hashCode());
 						Item inventoryItem = inventoryManager.inventoryItemMap.get(key);
 						//System.out.println("inventory item "+inventoryItem.productType);
 						if(inventoryItem == null){
@@ -67,6 +64,9 @@ public class WarehouseImpl implements WarehouseInterface {
 
 
 	}
+	/**
+	 * Provide interface for user to input the manufacturers' ports for connecting
+	 */
 	public boolean connect(){
 		boolean connected= false;
 		Scanner in = new Scanner(System.in);
@@ -100,6 +100,9 @@ public class WarehouseImpl implements WarehouseInterface {
 		in.close();
 		return connected;
 	}
+	/**
+	 * replenish the current warehouse, save the update to the corresponding xml file 
+	 */
 	public void replenish(){
 		System.out.println("enterd to replanish");
 		for(Item item: inventoryManager.inventoryItemMap.values()){
@@ -137,14 +140,18 @@ public class WarehouseImpl implements WarehouseInterface {
 
 		}
 	}
+	/* (non-Javadoc)
+	 * @see warehouse.WarehouseInterface#getProductsByID(java.lang.String)
+	 */
 	@Override
 	public ItemList getProductsByID(String productID) {
-		System.out.println("getProductsByID is called...");
+		System.out.println("getProductsByID is called..." + productID);
 		ItemList returnitems=new ItemList();
 
 		if(!(productID.equals(""))){
-			System.out.println("entering if loop"+inventoryManager.inventoryItemMap.toString() );
+			System.out.println("entering if loop"+inventoryManager.toString() );
 			Item inventoryItem = inventoryManager.inventoryItemMap.get(productID);
+			
 			if(inventoryItem != null){
 
 				returnitems.addItem(inventoryItem);
@@ -167,6 +174,9 @@ public class WarehouseImpl implements WarehouseInterface {
 
 	}
 
+	/* (non-Javadoc)
+	 * @see warehouse.WarehouseInterface#getProductsByType(java.lang.String)
+	 */
 	@Override
 	public ItemList getProductsByType(String productType) {
 		// TODO Auto-generated method stub
@@ -180,6 +190,9 @@ public class WarehouseImpl implements WarehouseInterface {
 		return returnitems;
 	}
 
+	/* (non-Javadoc)
+	 * @see warehouse.WarehouseInterface#getProductsByRegisteredManufacturers(java.lang.String)
+	 */
 	@Override
 	public ItemList getProductsByRegisteredManufacturers(String manufacturerName){
 		// TODO Auto-generated method stub
@@ -199,6 +212,9 @@ public class WarehouseImpl implements WarehouseInterface {
 		return returnitems;
 	}
 
+	/* (non-Javadoc)
+	 * @see warehouse.WarehouseInterface#getProducts(java.lang.String, java.lang.String)
+	 */
 	@Override
 	public ItemList getProducts(String productID, String manufacturerName) {
 		// TODO Auto-generated method stub
@@ -225,6 +241,9 @@ public class WarehouseImpl implements WarehouseInterface {
 		return returnitems;
 	}
 
+	/* (non-Javadoc)
+	 * @see warehouse.WarehouseInterface#registerRetailer(java.lang.String)
+	 */
 	@Override
 	public boolean registerRetailer(String retailerName) {
 		if(retailerName.isEmpty()){
@@ -241,6 +260,9 @@ public class WarehouseImpl implements WarehouseInterface {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see warehouse.WarehouseInterface#unregisterRegailer(java.lang.String)
+	 */
 	@Override
 	public boolean unregisterRegailer(String retailerName) {
 		// TODO Auto-generated method stub
@@ -264,6 +286,9 @@ public class WarehouseImpl implements WarehouseInterface {
 
 	}
 
+	/* (non-Javadoc)
+	 * @see warehouse.WarehouseInterface#shippingGoods(tools.ItemList, java.lang.String)
+	 */
 	@Override
 	public ItemList shippingGoods(ItemList itemlist,String reatilername) {
 		System.out.println("ship good called");
@@ -313,6 +338,9 @@ public class WarehouseImpl implements WarehouseInterface {
 
 	}
 
+	/* (non-Javadoc)
+	 * @see warehouse.WarehouseInterface#getName()
+	 */
 	@Override
 	public String getName() {
 		// TODO Auto-generated method stub

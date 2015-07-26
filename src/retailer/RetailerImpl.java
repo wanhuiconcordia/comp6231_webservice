@@ -31,8 +31,7 @@ public class RetailerImpl implements RetailerInterface {
 	
 	/**
 	 * Constructor
-	 * @param orb
-	 * @param loggerClient
+	 * @param name
 	 */
 	public RetailerImpl(String name){
 		this.name = name;
@@ -43,8 +42,7 @@ public class RetailerImpl implements RetailerInterface {
 	}
 
 	/**
-	 * Provide interface for user to input the warehouses' names for connecting
-	 * @param in
+	 * Provide interface for user to input the warehouses' ports for connecting
 	 */
 	public void connectWarehouses(){
 //		WarehouseInterface wh1 = new WareHouseImpl("wh1");
@@ -82,6 +80,9 @@ public class RetailerImpl implements RetailerInterface {
 		in.close();
 	}
 
+	/* (non-Javadoc)
+	 * @see retailer.RetailerInterface#getCatalog(int)
+	 */
 	@Override
 	public ItemList getCatalog(int customerReferenceNumber) {
 		System.out.println("getCatalog is called...");
@@ -108,8 +109,11 @@ public class RetailerImpl implements RetailerInterface {
 		return itemList;
 	}
 
+	/* (non-Javadoc)
+	 * @see retailer.RetailerInterface#submitOrder(int, tools.ItemList)
+	 */
 	@Override
-	public ItemShippingStatusList submitOrder(int customerReferenceNumber,
+	public synchronized ItemShippingStatusList submitOrder(int customerReferenceNumber,
 			ItemList itemOrderList) {
 		ItemShippingStatusList itemShippingStatusList= new ItemShippingStatusList();
 		Customer currentCustomer = customerManager.getCustomerByReferenceNumber(customerReferenceNumber);
@@ -205,6 +209,9 @@ public class RetailerImpl implements RetailerInterface {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see retailer.RetailerInterface#signUp(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)
+	 */
 	@Override
 	public SignUpResult signUp(String name, String password, String street1,
 			String street2, String city, String state, String zip,
@@ -212,11 +219,17 @@ public class RetailerImpl implements RetailerInterface {
 		return customerManager.register(name, password, street1, street2, city, state, zip, country);
 	}
 
+	/* (non-Javadoc)
+	 * @see retailer.RetailerInterface#signIn(int, java.lang.String)
+	 */
 	@Override
 	public Customer signIn(int customerReferenceNumber, String password) {
 		return customerManager.find(customerReferenceNumber, password);
 	}
 
+	/* (non-Javadoc)
+	 * @see retailer.RetailerInterface#getProducts(java.lang.String)
+	 */
 	@Override
 	public ItemList getProducts(String productID) {
 		ItemList allItems = new ItemList();

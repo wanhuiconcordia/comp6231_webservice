@@ -7,6 +7,10 @@ import javax.xml.ws.Endpoint;
 
 
 
+/**
+ * @author comp6231.team5
+ * Warehouse class
+ */
 public class Warehouse {
 	public static void main(String []args) throws RemoteException{
 		Scanner in = new Scanner(System.in);

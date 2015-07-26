@@ -55,7 +55,7 @@ public class Client
 			URL url = new URL(urlStr);
 			QName qname = new QName("http://retailer/", "RetailerImplService");
 			Service service = Service.create(url, qname);
-			retailer = service.getPort(RetailerInterface .class);
+			retailer = service.getPort(RetailerInterface.class);
 			return true;
 		} catch (MalformedURLException e1) {
 			System.out.println("Failed to access the WSDL at:" + urlStr);
