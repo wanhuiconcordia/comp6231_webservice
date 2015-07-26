@@ -33,6 +33,9 @@ public class ManufacturerImpl implements ManufacturerInterface {
 	 * Constructor
 	 * @param name
 	 * @param loggerClient
+	 * @throws RemoteException
+	 * @throws MalformedURLException
+	 * @throws NotBoundException
 	 */
 	public ManufacturerImpl(String name, LoggerClient loggerClient){
 		this.name = name;
@@ -49,7 +52,7 @@ public class ManufacturerImpl implements ManufacturerInterface {
 	 * Simulate real produce.
 	 * @param productName
 	 * @param quantity
-	 * @return true
+	 * @return
 	 */
 	private boolean produce(String productName, int quantity){
 		return true;
@@ -138,7 +141,6 @@ public class ManufacturerImpl implements ManufacturerInterface {
 	}
 	
 	/**
-	 * get this manufacturer's name
 	 * @return current manufacturer's name
 	 */
 	public String getName(){
