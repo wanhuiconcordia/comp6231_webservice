@@ -143,14 +143,14 @@ public class WarehouseImpl implements WarehouseInterface {
 		ItemList returnitems=new ItemList();
 
 		if(!(productID.equals(""))){
-			System.out.println("entering if loop"+inventoryManager.inventoryItemMap.toString() );
-			Item inventoryItem = inventoryManager.inventoryItemMap.get(productID);
-			if(inventoryItem != null){
+			
+			for(Item inventoryItem:inventoryManager.inventoryItemMap.values()){
+				if(inventoryItem != null&& inventoryItem.productID.equals(productID)){
 
 				returnitems.addItem(inventoryItem);
 
 			}
-
+			}
 		}
 		else{
 			System.out.println("entering loop"+inventoryManager.inventoryItemMap.toString() );
@@ -173,10 +173,12 @@ public class WarehouseImpl implements WarehouseInterface {
 		ItemList returnitems=new ItemList();
 		for(Item inventoryitems:inventoryManager.inventoryItemMap.values()){
 
-			if(inventoryitems.productType.equals(productType)){
+			if(inventoryitems!=null&&inventoryitems.productType.equals(productType)){
 				returnitems.addItem(inventoryitems);
 			}
 		}
+		System.out.println("return:");
+		System.out.println(returnitems.toString());
 		return returnitems;
 	}
 
@@ -185,17 +187,20 @@ public class WarehouseImpl implements WarehouseInterface {
 		// TODO Auto-generated method stub
 		ItemList returnitems=new ItemList();
 		for(ManufacturerInterface manufacture:manufactures){
+			System.out.println(manufacture.getName()+"  "+manufacturerName);
 			if(manufacture.getName().equals(manufacturerName)){
 
 				for(Item inventoryitems:inventoryManager.inventoryItemMap.values()){
 
-					if(inventoryitems.manufacturerName.equals(manufacturerName)){
+					if(inventoryitems!=null&&inventoryitems.manufacturerName.equals(manufacturerName)){
 						returnitems.addItem(inventoryitems);
 					}
 				}
 
 			}
 		}
+		System.out.println("return:");
+		System.out.println(returnitems.toString());
 		return returnitems;
 	}
 
@@ -206,11 +211,13 @@ public class WarehouseImpl implements WarehouseInterface {
 
 		if(!(productID.equals(""))){
 
-			Item inventoryItem = inventoryManager.inventoryItemMap.get(productID);
-			if(inventoryItem != null && inventoryItem.manufacturerName.equals(manufacturerName)){
+		//	Item inventoryItem = inventoryManager.inventoryItemMap.get(productID);
+			for(Item inventoryItem:inventoryManager.inventoryItemMap.values()){
+			if(inventoryItem!=null&&inventoryItem.productID.equals(productID) && inventoryItem.manufacturerName.equals(manufacturerName)){
 
 				returnitems.addItem(inventoryItem);
 
+			}
 			}
 
 		}
@@ -220,8 +227,11 @@ public class WarehouseImpl implements WarehouseInterface {
 
 				returnitems.addItem(i);
 			}
+		
 
 		}
+		System.out.println("return:");
+		System.out.println(returnitems.toString());
 		return returnitems;
 	}
 

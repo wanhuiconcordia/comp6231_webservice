@@ -2,49 +2,13 @@
 
 <products>
   <product>
-    <manufacturerName>manufacturer1</manufacturerName>
     <productType>DVD player</productType>
-    <unitPrice>120</unitPrice>
   </product>
   <product>
-    <manufacturerName>manufacturer1</manufacturerName>
     <productType>TV</productType>
-    <unitPrice>300</unitPrice>
   </product>
   <product>
-    <manufacturerName>manufacturer1</manufacturerName>
     <productType>video camera</productType>
-    <unitPrice>220</unitPrice>
-  </product>
-  <product>
-    <manufacturerName>manufacturer2</manufacturerName>
-    <productType>DVD player</productType>
-    <unitPrice>130</unitPrice>
-  </product>
-  <product>
-    <manufacturerName>manufacturer2</manufacturerName>
-    <productType>TV</productType>
-    <unitPrice>310</unitPrice>
-  </product>
-  <product>
-    <manufacturerName>manufacturer2</manufacturerName>
-    <productType>video camera</productType>
-    <unitPrice>230</unitPrice>
-  </product>
-  <product>
-    <manufacturerName>manufacturer3</manufacturerName>
-    <productType>DVD player</productType>
-    <unitPrice>140</unitPrice>
-  </product>
-  <product>
-    <manufacturerName>manufacturer3</manufacturerName>
-    <productType>TV</productType>
-    <unitPrice>320</unitPrice>
-  </product>
-  <product>
-    <manufacturerName>manufacturer3</manufacturerName>
-    <productType>video camera</productType>
-    <unitPrice>240</unitPrice>
   </product>
 
 </products>
